@@ -10,14 +10,14 @@
 char *string_toupper(char *s)
 {
 
-	int j;
+	int i;
 
-	j = 0;
-	while (*(s + j))
+	i = 0;
+	while (*(s + i))
 	{
-		if (*(s + j) >= 'a' && *(s + j) <= 'z')
-			*(s + j) -= 'a' - 'A';
-		j++;
+		if (*(s + i) >= 'a' && *(s + i) <= 'z')
+			*(s + i) -= 'a' - 'A';
+		i++;
 	}
 	return (s);
 }
