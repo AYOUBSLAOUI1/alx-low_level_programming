@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
 /**
- * free_grid - free the grid.
+ * free_grid - alloc_grid.
  * @grid: grid of memories.
  * @height: array.
  * Return: void.
@@ -9,12 +9,9 @@
 
 void free_grid(int **grid, int height)
 {
-	height--;
+	int x = 0;
 
-	while (height >= 0)
-	{
-		free(*(grid + height));
-		height--;
-	}
+	for (; x < height; x++)
+		free(grid[x]);
 	free(grid);
 }
