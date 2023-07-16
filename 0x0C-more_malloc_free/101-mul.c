@@ -1,20 +1,23 @@
 #include "main.h"
 
 /**
- * _print - moves a string one place to the left and prints the string
- * @str: string to move
- * @l: size of string
+ * _print - moves a string one place to the left.
+ * @str: string.
+ * @l: size of string.
  *
  * Return: void
  */
 
 void _print(char *str, int l)
 {
-	int x = 0;
+	int x, y;
 
+	x = y = 0;
 	while (x < l)
 	{
 		if (str[x] != '0')
+			y = 1;
+		if (y || x == l - 1)
 			_putchar(str[x]);
 		x++;
 	}
@@ -36,22 +39,22 @@ void _print(char *str, int l)
 
 char *mul(char n, char *num, int num_index, char *dest, int dest_index)
 {
-	int j, k, mul, mulrem, add, addrem;
+	int a, b, mul, mulrem, add, addrem;
 
 	mulrem = addrem = 0;
-	for (j = num_index, k = dest_index; j >= 0; j--, k--)
+	for (a = num_index, b = dest_index; a >= 0; a--, b--)
 	{
-		mul = (n - '0') * (num[j] - '0') + mulrem;
+		mul = (n - '0') * (num[a] - '0') + mulrem;
 		mulrem = mul / 10;
-		add = (dest[k] - '0') + (mul % 10) + addrem;
+		add = (dest[b] - '0') + (mul % 10) + addrem;
 		addrem = add / 10;
-		dest[k] = add % 10 + '0';
+		dest[b] = add % 10 + '0';
 	}
-	for (addrem += mulrem; k >= 0 && addrem; k--)
+	for (addrem += mulrem; b >= 0 && addrem; b--)
 	{
-		add = (dest[k] - '0') + addrem;
+		add = (dest[b] - '0') + addrem;
 		addrem = add / 10;
-		dest[k] = add % 10 + '0';
+		dest[b] = add % 10 + '0';
 	}
 	if (addrem)
 	{
@@ -69,13 +72,13 @@ char *mul(char n, char *num, int num_index, char *dest, int dest_index)
 
 int check_for_digits(char **av)
 {
-	int i, j;
+	int x, y;
 
-	for (i = 1; i < 3; i++)
+	for (x = 1; x < 3; x++)
 	{
-		for (j = 0; av[i][j]; j++)
+		for (y = 0; av[x][y]; y++)
 		{
-			if (av[i][j] < '0' || av[i][j] > '9')
+			if (av[x][y] < '0' || av[x][y] > '9')
 				return (1);
 		}
 	}
@@ -84,8 +87,8 @@ int check_for_digits(char **av)
 
 /**
  * init - initializes a string
- * @str: string to initialize
- * @l: length of string
+ * @str: sting
+ * @l: length of strinf
  *
  * Return: void
  */
@@ -109,7 +112,7 @@ void init(char *str, int l)
 
 int main(int argc, char *argv[])
 {
-	int l1, l2, ln, ti, x, y;
+	int l1, l2, ln, ti, i;
 	char *a;
 	char *t;
 	char e[] = "Error\n";
@@ -133,9 +136,9 @@ int main(int argc, char *argv[])
 		exit(98);
 	}
 	init(a, ln - 1);
-	for (ti = l2 - 1, x = 0; ti >= 0; ti--, x++)
+	for (ti = l2 - 1, i = 0; ti >= 0; ti--, i++)
 	{
-		t = mul(argv[2][ti], argv[1], l1 - 1, a, (ln - 2) - x);
+		t = mul(argv[2][ti], argv[1], l1 - 1, a, (ln - 2) - i);
 		if (t == NULL)
 		{
 			for (ti = 0; e[ti]; ti++)
