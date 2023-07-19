@@ -1,59 +1,47 @@
-#include <stdio.h>
-#include "function_pointers.h"
+#include "3-calc.h"
 
 /**
- * is_98 - check if a number is equal to 98
- * @elem: the integer to check
+ * main - program that perfroms simple operations
+ * @argc: number of arguments
+ * @argv: array of arguments
  *
- * Return: 0 if false, something else otherwise.
+ * Return: Always 0 (Success)
  */
 
-int is_98(int elem)
+int main(int argc, char *argv[])
 {
-	return (98 == elem);
-}
+	int arg1, arg2, result;
+	char o;
+	int (*func)(int, int);
 
-/**
- * is_strictly_positive - check if a number is greater than 0
- * @elem: the integer to check
- *
- * Return: 0 if false, something else otherwise.
- */
+	if (argc != 4)
+	{
+		printf("Error\n");
+		exit(98);
+	}
 
-int is_strictly_positive(int elem)
-{
-	return (elem > 0);
-}
+	arg1 = atoi(argv[1]);
+	arg2 = atoi(argv[3]);
 
+	func = get_op_func(argv[2]);
 
-/**
- * abs_is_98 - check if the absolute value of a number is 98
- * @elem: the integer to check
- *
- * Return: 0 if false, something else otherwise.
- */
+	if (!func)
+	{
+		printf("Error\n");
+		exit(99);
+	}
 
-int abs_is_98(int elem)
-{
-	return (elem == 98 || -elem == 98);
-}
+	o = *argv[2];
 
-/**
- * main - check the code
- *
- * Return: Always 0.
- */
+	if ((o == '/' || o == '%') && arg2 == 0)
+	{
+		printf("Error\n");
+		exit(100);
+	}
 
-int main(void)
-{
-	int array[20] = {0, -98, 98, 402, 1024, 4096, -1024, -98, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 98};
-	int index;
+	result = func(arg1, arg2);
 
-	index = int_index(array, 20, is_98);
-	printf("%d\n", index);
-	index = int_index(array, 20, abs_is_98);
-	printf("%d\n", index);
-	index = int_index(array, 20, is_strictly_positive);
-	printf("%d\n", index);
+	printf("%d\n", result);
+
 	return (0);
 }
